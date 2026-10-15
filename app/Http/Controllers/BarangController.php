@@ -79,7 +79,7 @@ class BarangController extends Controller
         return redirect()->route('barang.index')->with('success', 'Data barang berhasil diperbarui');
     }
 
-    public function destroy($id)
+        public function destroy($id)
     {
         $barang = \App\Models\Barang::findOrFail($id);
         $barang->delete();

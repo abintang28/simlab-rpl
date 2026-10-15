@@ -40,12 +40,14 @@
                     <td>{{ $barang->stok }}</td>
                     <td>{{ $barang->kondisi }}</td>
                     <td>{{ $barang->status }}</td>
-                    <td>
-                        <a href="{{ route('barang.edit', $barang->id) }}">Edit</a>| 
-                        <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display: inline;">
+                                        <td>
+                        <a href="{{ route('barang.edit', $barang->id) }}">Edit</a> | 
+                        <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
+                            <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')" style="background:none; border:none; color:red; cursor:pointer; text-decoration:underline; padding:0;">
+                                Hapus
+                            </button>
                         </form>
                     </td>
                 </tr>

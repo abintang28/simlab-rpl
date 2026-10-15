@@ -4,68 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Barang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Edit Barang: {{ $barang->nama_barang }}</h1>
+<body class="bg-gray-100 font-sans p-6">
 
-    <form action="{{ route('barang.update', $barang->id) }}" method="POST">
-        @csrf
-        @method('PUT') <!-- Wajib untuk proses update -->
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Barang: {{ $barang->nama_barang }}</h1>
 
-        <label>Kategori:</label><br>
-        <select name="kategori_id">
-            <option value="">-- Pilih Kategori --</option>
-            @foreach ($kategoris as $kategori)
-                <option value="{{ $kategori->id }}" {{ old('kategori_id', $barang->kategori_id) == $kategori->id ? 'selected' : '' }}>
-                    {{ $kategori->nama_kategori }}
-                </option>
-            @endforeach
-        </select>
-        @error('kategori_id') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+        <form action="{{ route('barang.update', $barang->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        <label>Kode Barang:</label><br>
-        <input type="text" name="kode_barang" value="{{ old('kode_barang', $barang->kode_barang) }}">
-        @error('kode_barang') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+            <!-- Kategori -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Kategori:</label>
+                <select name="kategori_id" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach ($kategoris as $kategori)
+                        <option value="{{ $kategori->id }}" {{ old('kategori_id', $barang->kategori_id) == $kategori->id ? 'selected' : '' }}>
+                            {{ $kategori->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('kategori_id') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
 
-        <label>Nama Barang:</label><br>
-        <input type="text" name="nama_barang" value="{{ old('nama_barang', $barang->nama_barang) }}">
-        @error('nama_barang') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+            <!-- Kode Barang -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Kode Barang:</label>
+                <input type="text" name="kode_barang" value="{{ old('kode_barang', $barang->kode_barang) }}" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                @error('kode_barang') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
 
-        <label>Spesifikasi:</label><br>
-        <textarea name="spesifikasi">{{ old('spesifikasi', $barang->spesifikasi) }}</textarea>
-        @error('spesifikasi') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+            <!-- Nama Barang -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Nama Barang:</label>
+                <input type="text" name="nama_barang" value="{{ old('nama_barang', $barang->nama_barang) }}" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                @error('nama_barang') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
 
-        <label>Stok:</label><br>
-        <input type="number" name="stok" value="{{ old('stok', $barang->stok) }}">
-        @error('stok') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+            <!-- Spesifikasi -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Spesifikasi:</label>
+                <textarea name="spesifikasi" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">{{ old('spesifikasi', $barang->spesifikasi) }}</textarea>
+                @error('spesifikasi') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
 
-        <label>Kondisi:</label><br>
-        <select name="kondisi">
-            <option value="">-- Pilih Kondisi --</option>
-            <option value="Baik" {{ old('kondisi', $barang->kondisi) == 'Baik' ? 'selected' : '' }}>Baik</option>
-            <option value="Rusak Ringan" {{ old('kondisi', $barang->kondisi) == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
-            <option value="Rusak Berat" {{ old('kondisi', $barang->kondisi) == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
-        </select>
-        @error('kondisi') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+            <!-- Stok -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Stok:</label>
+                <input type="number" name="stok" value="{{ old('stok', $barang->stok) }}" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                @error('stok') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
 
-        <label>Status:</label><br>
-        <select name="status">
-            <option value="">-- Pilih Status --</option>
-            <option value="Tersedia" {{ old('status', $barang->status) == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
-            <option value="Dipinjam" {{ old('status', $barang->status) == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
-            <option value="Maintenance" {{ old('status', $barang->status) == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
-        </select>
-        @error('status') <span style="color:red">{{ $message }}</span> @enderror
-        <br><br>
+            <!-- Kondisi -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Kondisi:</label>
+                <select name="kondisi" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                    <option value="">-- Pilih Kondisi --</option>
+                    <option value="Baik" {{ old('kondisi', $barang->kondisi) == 'Baik' ? 'selected' : '' }}>Baik</option>
+                    <option value="Rusak Ringan" {{ old('kondisi', $barang->kondisi) == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
+                    <option value="Rusak Berat" {{ old('kondisi', $barang->kondisi) == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
+                </select>
+                @error('kondisi') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
 
-        <button type="submit">Update Barang</button>
-        <a href="{{ route('barang.index') }}">Batal</a>
-    </form>
+            <!-- Status -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+                <select name="status" class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:border-blue-500">
+                    <option value="">-- Pilih Status --</option>
+                    <option value="Tersedia" {{ old('status', $barang->status) == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="Dipinjam" {{ old('status', $barang->status) == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
+                    <option value="Maintenance" {{ old('status', $barang->status) == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
+                </select>
+                @error('status') <span class="text-red-500 text-xs italic">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="flex items-center gap-2 mt-6">
+                <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+                    Update Barang
+                </button>
+                <a href="{{ route('barang.index') }}" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">
+                    Batal
+                </a>
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>
